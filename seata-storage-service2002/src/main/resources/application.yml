@@ -1,0 +1,52 @@
+server:
+  port: 2002
+
+spring:
+  application:
+    name: seata-storage-service
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 10.211.55.7:5555
+        username: nacos
+        password: nacos
+        group: SEATA_GROUP
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://10.211.55.7:3306/seata_storage
+    username: root
+    password: 123456
+
+
+feign:
+  hystrix:
+    enabled: false
+
+logging:
+  level:
+    io:
+      seata: info
+
+mybatis:
+  mapperLocations: classpath:mapper/*.xml
+
+# 与server中的registry.conf的信息相同，必须配置，不然不能正常运行
+seata:
+  # 这里的配置对应 seataServer.properties 中的 service.vgroupMapping.storage-service-group=default
+  tx-service-group: default_tx_group
+  enable-auto-data-source-proxy: false
+  config:
+    type: nacos
+    nacos:
+      server-addr: 10.211.55.7:5555
+      username: nacos
+      password: nacos
+      group: SEATA_GROUP # 找到相关组的相应文件
+      dataId: "seataServer.properties"
+  registry:
+    type: nacos
+    nacos:
+      server-addr: 10.211.55.7:5555
+      username: nacos
+      password: nacos
+      group: SEATA_GROUP

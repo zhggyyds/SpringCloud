@@ -1,0 +1,29 @@
+server:
+  port: 8401
+
+spring:
+  application:
+    name: cloudalibaba-sentinel-service
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 10.211.55.7:1111 #Nacos服务注册中心地址
+    sentinel:
+      transport:
+        dashboard: 10.211.55.7:8080 #配置Sentinel dashboard地址
+        port: 8719 # 具体不懂，配上就完了
+      datasource:
+        ds1:
+          nacos:
+            server-addr: localhost:8848
+            dataId: cloudalibaba-sentinel-service
+            groupId: DEFAULT_GROUP
+            data-type: json
+            rule-type: flow
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
